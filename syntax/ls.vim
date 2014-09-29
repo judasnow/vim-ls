@@ -56,16 +56,18 @@ highlight default link lsString String
 
 " Matches decimal/floating-point numbers like 10.42e-8.
 syntax match lsFloat
-\ /\%(\<-\?\|-\)\zs\d[0-9_]*\%(\.\d[0-9_]*\)\?\%(e[+-]\?\d[0-9_]*\)\?\%([a-zA-Z$][$a-zA-Z0-9_]*\)\?/
+\ /\<\d[0-9_]*\%(\.\d[0-9_]*\)\?\%(e[+-]\?\d[0-9_]*\)\?\k*/
 \ contains=lsNumberComment
 highlight default link lsFloat Float
-syntax match lsNumberComment /\d\+\zs\%(e[+-]\?\d\)\@![a-zA-Z$][$a-zA-Z0-9_]*/ contained
+syntax match lsNumberComment /\d\+\zs\%(e[+-]\?\d]\)\@!\k*\>/ contained
 highlight default link lsNumberComment Comment
 " Matches hex numbers like 0xfff, 0x000.
-syntax match lsNumber /\%(\<-\?\|-\)\zs0x\x\+/
+syntax match lsNumber /\<0x\x\+/
 " Matches N radix numbers like 2@1010.
 syntax match lsNumber
-\ /\%(\<-\?\|-\)\zs\%(\d*\)\~[0-9A-Za-z][0-9A-Za-z_]*/
+\ /\<\%(\d*\)\~[0-9A-Za-z][0-9A-Za-z_]*/
+" 匹配普通数字
+syntax match lsNumber /\<[0-9]*\>/
 highlight default link lsNumber Number
 
 " Displays an error for reserved words.
@@ -134,3 +136,4 @@ highlight default link lsSpaceError Error
 if !exists('b:current_syntax')
   let b:current_syntax = 'livescript'
 endif
+
